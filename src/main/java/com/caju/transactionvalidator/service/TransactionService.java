@@ -14,27 +14,28 @@ public class TransactionService {
     }
 
     public String processTransaction(Transaction transaction) {
-        String category = getCategoryFromMcc(transaction.getMcc());
-        double currentBalance = balance.getBalance(category);
+        try {
 
-        if (transaction.getTotalAmount() > currentBalance) {
-            return "{ \"code\": \"51\" }";
-        } else {
-            balance.reduceBalance(category, transaction.getTotalAmount());
-            return "{ \"code\": \"00\" }";
+            String category = getCategoryFromMcc(transaction.getMcc());
+            double currentBalance = balance.getBalance(category);
+
+            if (transaction.getTotalAmount() > currentBalance) {
+                return "{ \"code\": \"51\" }";
+            } else {
+                balance.reduceBalance(category, transaction.getTotalAmount());
+                return "{ \"code\": \"00\" }";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{ \"code\": \"07\" }";
         }
     }
 
     private String getCategoryFromMcc(String mcc) {
-        switch (mcc) {
-            case "5411":
-            case "5412":
-                return "FOOD";
-            case "5811":
-            case "5812":
-                return "MEAL";
-            default:
-                return "CASH";
-        }
+        return switch (mcc) {
+            case "5411", "5412" -> "FOOD";
+            case "5811", "5812" -> "MEAL";
+            default -> "CASH";
+        };
     }
 }
