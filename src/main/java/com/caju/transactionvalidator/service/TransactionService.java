@@ -32,7 +32,7 @@ public class TransactionService {
 
             if (transaction.getTotalAmount() <= currentBalance) {
                 balance.reduceBalance(category, transaction.getTotalAmount());
-                return "{ \"code\": \"00\" }"; // Transação aprovada
+                return "{ \"code\": \"00\" }";
             } else {
                 double cashBalance = balance.getBalance("CASH");
                 if (transaction.getTotalAmount() <= cashBalance) {

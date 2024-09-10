@@ -43,7 +43,6 @@ public class BalanceTest {
 
     @Test
     public void testGetBalance_InvalidCategory() {
-        // Testa a obtenção de saldo para uma categoria inválida
         assertThrows(IllegalArgumentException.class, () -> {
             balance.getBalance("INVALID_CATEGORY");
         });

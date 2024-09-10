@@ -1,0 +1,8 @@
+Para lidar com transações simultâneas em um autorizador de pagamentos o desafio principal é evitar que duas transações concorrentes acessem e 
+modifiquem o saldo de uma conta ao mesmo.
+
+Versionamento:
+-Uma transação lê o saldo e sua versão/timestamp atual.
+-A transação processa logicamente a operação (verificação de saldo, categoria).
+-Antes de modificar o saldo, a versão/timestamp é verificada novamente.
+-Se a versão/timestamp não foi alterada, a transação é concluída. Caso contrário, a transação falha.

@@ -9,7 +9,6 @@ class MerchantCategoryConfigTest {
 
     @Test
     void testGetCategoryFromMerchant_ExistingMerchant() {
-        // Testa quando o merchant existe no mapa
         String category = MerchantCategoryConfig.getCategoryFromMerchant("UBER TRIP");
         assertEquals("TRANSPORT", category);
 
