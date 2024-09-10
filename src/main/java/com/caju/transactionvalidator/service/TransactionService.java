@@ -19,11 +19,17 @@ public class TransactionService {
             String category = getCategoryFromMcc(transaction.getMcc());
             double currentBalance = balance.getBalance(category);
 
-            if (transaction.getTotalAmount() > currentBalance) {
-                return "{ \"code\": \"51\" }";
-            } else {
+            if (transaction.getTotalAmount() <= currentBalance) {
                 balance.reduceBalance(category, transaction.getTotalAmount());
-                return "{ \"code\": \"00\" }";
+                return "{ \"code\": \"00\" }"; // Transação aprovada
+            } else {
+                double cashBalance = balance.getBalance("CASH");
+                if (transaction.getTotalAmount() <= cashBalance) {
+                    balance.reduceBalance("CASH", transaction.getTotalAmount());
+                    return "{ \"code\": \"00\" }";
+                } else {
+                    return "{ \"code\": \"51\" }";
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
