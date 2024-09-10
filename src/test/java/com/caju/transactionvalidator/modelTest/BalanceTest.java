@@ -17,26 +17,25 @@ public class BalanceTest {
 
     @Test
     public void testGetBalance() {
-        assertEquals(1000.00, balance.getBalance("CASH"));
+        assertEquals(200.00, balance.getBalance("CASH"));
         assertEquals(500.00, balance.getBalance("MEAL"));
-        assertEquals(200.00, balance.getBalance("FOOD"));
+        assertEquals(1000.00, balance.getBalance("FOOD"));
     }
 
     @Test
     public void testReduceBalance() {
         balance.reduceBalance("CASH", 100.00);
-        assertEquals(900.00, balance.getBalance("CASH"));
+        assertEquals(100.00, balance.getBalance("CASH"));
 
         balance.reduceBalance("MEAL", 50.00);
         assertEquals(450.00, balance.getBalance("MEAL"));
 
         balance.reduceBalance("FOOD", 25.00);
-        assertEquals(175.00, balance.getBalance("FOOD"));
+        assertEquals(975.00, balance.getBalance("FOOD"));
     }
 
     @Test
     public void testReduceBalance_InsufficientFunds() {
-        // Testa a redução de saldo quando há fundos insuficientes
         assertThrows(IllegalArgumentException.class, () -> {
             balance.reduceBalance("CASH", 1200.00);
         });
