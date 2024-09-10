@@ -1,5 +1,6 @@
 package com.caju.transactionvalidator.service;
 
+import com.caju.transactionvalidator.model.MerchantCategoryConfig;
 import com.caju.transactionvalidator.model.Transaction;
 import com.caju.transactionvalidator.model.Balance;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,18 @@ public class TransactionService {
 
     public String processTransaction(Transaction transaction) {
         try {
+            String category;
 
-            String category = getCategoryFromMcc(transaction.getMcc());
+            // Verifica se o nome do comerciante tem uma categoria específica
+            String merchantName = transaction.getMerchant().trim().toUpperCase();
+            String categoryFromMerchant = MerchantCategoryConfig.getCategoryFromMerchant(merchantName);
+
+            if (categoryFromMerchant != null) {
+                category = categoryFromMerchant;
+            } else {
+                category = getCategoryFromMcc(transaction.getMcc());
+            }
+
             double currentBalance = balance.getBalance(category);
 
             if (transaction.getTotalAmount() <= currentBalance) {
