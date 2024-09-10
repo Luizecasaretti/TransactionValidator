@@ -1,7 +1,5 @@
 package com.caju.transactionvalidator.model;
 
-import java.util.HashMap;
-import java.util.Map;
 public class Transaction {
     private String account;
     private double totalAmount;

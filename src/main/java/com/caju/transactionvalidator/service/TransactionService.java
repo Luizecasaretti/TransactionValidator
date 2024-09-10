@@ -10,8 +10,8 @@ public class TransactionService {
 
     private final Balance balance;
 
-    public TransactionService() {
-        this.balance = new Balance();
+    public TransactionService(Balance balance) {
+        this.balance = balance;
     }
 
     public String processTransaction(Transaction transaction) {
